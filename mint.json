@@ -18,37 +18,43 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:martin.wb.2015@gmail.com"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
+//   "topbarCtaButton": {
+//     "name": "Dashboard",
+//     "url": "https://dashboard.mintlify.com"
+//   },
   "tabs": [
     {
       "name": "API Reference",
       "url": "api-reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
+//   "anchors": [
+//     {
+//       "name": "Documentation",
+//       "icon": "book-open-cover",
+//       "url": "https://mintlify.com/docs"
+//     },
+//     {
+//       "name": "Community",
+//       "icon": "slack",
+//       "url": "https://mintlify.com/community"
+//     },
+//     {
+//       "name": "Blog",
+//       "icon": "newspaper",
+//       "url": "https://mintlify.com/blog"
+//     }
+//   ],
   "navigation": [
+    {
+      "group": "Dictionnaire",
+      "pages": [
+        "dico/etablissement"
+      ]
+    },
     {
       "group": "Get Started",
       "pages": [
@@ -82,10 +88,5 @@
         "api-reference/endpoint/delete"
       ]
     }
-  ],
-  "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
-  }
+  ]
 }
