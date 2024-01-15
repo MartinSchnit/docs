@@ -19,6 +19,36 @@
     }
   ],
   "paths": {
+    "/login": {
+        "get": {
+            "description": "Returns to access to all routes",
+            "responses": {
+                "200": {
+                    "description": "Plant response",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Plant"
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Unexpected error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
     "/plants": {
       "get": {
         "description": "Returns all plants from the system that the user has access to",
