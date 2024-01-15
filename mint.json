@@ -31,7 +31,8 @@
     {
       "group": "Dictionnaire",
       "pages": [
-        "dico/etablissement"
+        "dico/etablissement",
+        "dico/civility"
       ]
     },
     {
