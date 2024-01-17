@@ -10,7 +10,12 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "description": "Developement Server",
+      "url": "https://gextra6dev.raphaelpiccolo.com/appli/capretraite"
+    },
+    {
+      "description": "Production Server",
+      "url": "https://gextra.net/appli/capretraite"
     }
   ],
   "security": [

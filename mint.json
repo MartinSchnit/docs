@@ -29,23 +29,17 @@
   ],
   "navigation": [
     {
-      "group": "Dictionnaire",
-      "pages": [
-        "dico/etablissement",
-        "dico/civility"
-      ]
+      "group": "Get Started",
+      "pages": ["introduction"]
     },
     {
-      "group": "Get Started",
-      "pages": [
-        "introduction",
-        "quickstart",
-        "development"
-      ]
+      "group": "Dictionnaire",
+      "pages": ["dico/etablissement", "dico/civility"]
     },
     {
       "group": "Essentials",
       "pages": [
+        "essentials/introduction",
         "essentials/markdown",
         "essentials/code",
         "essentials/images",
@@ -56,9 +50,7 @@
     },
     {
       "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
+      "pages": ["api-reference/introduction"]
     },
     {
       "group": "Endpoint Examples",
