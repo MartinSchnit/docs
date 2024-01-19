@@ -25,17 +25,28 @@
   ],
   "paths": {
     "/login": {
-        "get": {
+        "post": {
             "description": "Returns to access to all routes",
+            "requestBody": {
+              "description": "Login",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Login"
+                  }
+                }
+              },
+              "required": true
+            },
             "responses": {
                 "200": {
-                    "description": "Plant response",
+                    "description": "Permet d'obtenir le token d'authentification",
                     "content": {
                         "application/json": {
                             "schema": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/Plant"
+                                    "$ref": "#/components/schemas/Token"
                                 }
                             }
                         }
@@ -46,7 +57,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Error"
+                                "$ref": "#/components/schemas/LoginError"
                             }
                         }
                     }
@@ -54,54 +65,15 @@
             }
         }
     },
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/orientation": {
       "post": {
-        "description": "Creates a new plant in the store",
+        "description": "Envoi d’orientation CR > Résidence",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/Orientation"
               }
             }
           },
@@ -113,7 +85,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/ResponseOrientation"
                 }
               }
             }
@@ -124,6 +96,14 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Messagetraitements":{
+                    "$ref": "#/components/examples/Messagetraitements"
+                  },
+                  "MessageProblemes": {
+                    "$ref": "#/components/examples/MessageProblemes"
+                  }
                 }
               }
             }
@@ -165,9 +145,28 @@
       }
     }
   },
+
   "components": {
     "schemas": {
-      "Plant": {
+      "Login": {
+        "required": [
+          "login",
+          "hash"
+        ],
+        "type": "object",
+        "properties": {
+          "login": {
+            "description": "Login que vous avez reçu",
+            "type": "string"
+          },
+          "hash": {
+            "description": "Mot de pass crypté que vous généré grâce au mot de passe et au cryptage reçu",
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "Orientation": {
         "required": [
           "name"
         ],
@@ -183,41 +182,89 @@
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
+      "Token": {
+        "required": [
+          "token",
+          "login"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
           },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
+          "login": {
+            "type": "string"
           }
-        ]
+        }
+      },
+      "ResponseOrientation": {
+        "required": [
+          "NumeroDemandeOrientationCR",
+          "NumeroDemandeOrientationRES"
+        ],
+        "type": "object",
+        "properties": {
+          "NumeroDemandeOrientationCR": {
+            "type": "string"
+          },
+          "NumeroDemandeOrientationRES": {
+            "type": "string"
+          },
+          "MessageProblemes": {
+            "type": "string"
+          },
+          "Messagetraitements": {
+            "type": "string"
+          }
+        }
       },
       "Error": {
         "required": [
-          "error",
-          "message"
+          "error"
         ],
         "type": "object",
         "properties": {
           "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
             "type": "string"
           }
         }
+      },
+      "LoginError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Error"
+          },
+          {
+            "required": [
+              "login1"
+            ],
+            "type": "object",
+            "properties": {
+              "login1": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "exemples": {
+      "MessageProblemes" : {
+        "summary": "Retour en cas de problème,7 cas possibles",
+        "value": {
+          "[ER001]" : "Problème Technique",
+          "[ER002]" : "Refus Doublon",
+          "[ER003]" : "Champ Obligatoire manquant : Liste des champs manquants.",
+          "[ER004]" : "Établissement inconnu du CRM. Vérifiez le code",
+          "[ER005]" : "La demande n’a pas pu être retrouvée pour une mise à jour",
+          "[ER006]" : "Type de transmission inconnue. Valeurs autorisées : 'CREATION', 'MAJ'"
+        },
+        "Messagetraitements": {
+          "summary": "Retour en cas de traitement OK, 2 cas possibles",
+          "value": {
+            "[TR001]": "Création OK",
+            "[TR002]": "MAJ OK"
+          }
       }
     },
     "securitySchemes": {
